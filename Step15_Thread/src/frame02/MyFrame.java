@@ -1,9 +1,10 @@
-package frame01;
+package frame02;
 
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 public class MyFrame extends JFrame {
 	//생성자
@@ -35,11 +36,29 @@ public class MyFrame extends JFrame {
 		var startBtn2 = new JButton("작업 시작2");
 		add(startBtn2);
 		startBtn2.addActionListener((e)->{
-			//스레드 객체를 생성해서
-			WorkThread t=new WorkThread();
-			//새로운 스레드를 시작시킨다
-			t.start();
+			new WorkThread().start();
 		});
+	}
+	//MyFrame 클래스의 메소드
+	public void test() {
+		MyFrame a =this;
+	}
+	//스레드 클래스를 내부 클래스로 만들어보기
+	class WorkThread extends Thread{
+		//WorkThread 클래스의 메소드 
+		@Override
+		public void run() {
+			System.out.println("10초 걸리는 작업을 시작합니다.");
+			try {
+				Thread.sleep(1000*10);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			WorkThread a= this;
+			//내부 클래스에서 바깥에 있는 클래스로 생성된 객체의 참조값이 필요할 때가 있다
+			MyFrame b =MyFrame.this;
+			JOptionPane.showMessageDialog(MyFrame.this, "작업이 종료되었습니다.");
+		}
 	}
 	//run 했을 때 실행의 흐름이 시작되는 (main Thread 가 시작되는) main 메소드
 	public static void main(String[] args) {
