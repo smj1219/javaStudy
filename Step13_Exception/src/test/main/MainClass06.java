@@ -1,6 +1,7 @@
 package test.main;
 
 import java.io.File;
+import java.io.IOException;
 
 public class MainClass06 {
 	public static void main(String[] args) {
@@ -12,26 +13,20 @@ public class MainClass06 {
 		//존재하면 memo.txt 파일을 삭제하도록 프로그래밍 해보세요.
 		
 		//파일구분자를 /로 작성을해도 File 객체내부에서 알아서 처리해준다.
-		File file = new File("C:/Users/user/playground/myFolder/memo.txt");
-		try {
-			if(file.exists()) {
-				file.delete();
-				System.out.println("삭제했습니다!");
-			}else{
-				file.createNewFile();
-				System.out.println("만들었습니다.");
-			}
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
 		
-		// C:\Users\ user\playground\myFolder\memo.txt 파일에 관련된 작업을 할 수있는 File 객체생성 
-		File f = new File("C:\\Users\\user\\playground\\myFolder\\memo.txt");
+		//C:\\Users\\user\\playground\\myFolder\\mamo.txt 파일에 관련된 작업을 할 수 있는 File 객체 생성
+		File f=new File("C:\\Users\\user\\playground\\myFolder\\mamo.txt");
 		try {
+			if(f.exists()) {
+				f.delete();
+			} else {
+				f.createNewFile();
+			}
 			
-//			boolean isExist = f.exists();
-//			f.createNewFile();
-//			f.delete(0);
+			
+			//Boolean isExists = f.exists(); //해당 파일이 존재하는지 여부 확인
+			//f.createNewFile(); //해당 파일 생성
+			//f.delete(); //해당 파일 삭제
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
