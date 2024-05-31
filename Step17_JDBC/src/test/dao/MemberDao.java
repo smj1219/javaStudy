@@ -170,7 +170,44 @@ public class MemberDao {
 	}
 	//매개변수에 전달된 번호에 해당하는 회원 한명의 정보를 리턴하는 메소드
 	public MemberDto getData(int num) {
-		return null;
+		MemberDto dto=null;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try {
+			conn = new DBConnector().getConn();
+			//실행할 select 문 구성하기 selection 인자가 있다면 미완성도 가능하다 
+			String sql = "SELECT num, name, addr"
+					+ " FROM member"
+					+ " Where num=?";
+			pstmt = conn.prepareStatement(sql);
+			//select 문이 미완성이라면 여기서 완성한다.
+			pstmt.setInt(1, num);
+			//select 문 실행하고 결과를 ResultSet 객체로 받아온다.
+			rs = pstmt.executeQuery();
+			//select 된 row 가 여러개라면 반복문 돌면서 추출한다.
+			while (rs.next()) {
+				dto=new MemberDto();
+				//ResultSet 에 담긴 내용을 읽어와서 setter 메소드를 활용해서 dto 에 넣어준다.
+				dto.setNum(rs.getInt("num"));
+				dto.setName(rs.getString("name"));
+				dto.setAddr(rs.getString("addr"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception e) {
+			}
+		}
+		//회원정보(MemberDto)가 누적된 List 의 참조값을 리턴해 준다.
+		return dto;
 	}
 }
 
