@@ -17,8 +17,5 @@ public class MainClass09 {
 					tmp.getNum(),tmp.getName(),tmp.getAddr());
 			System.out.println(info);
 		}
-		
-		System.out.println(dao.getData(1));
-		
 	}
 }

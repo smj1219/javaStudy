@@ -185,10 +185,11 @@ public class MemberDao {
 			pstmt.setInt(1, num);
 			//select 문 실행하고 결과를 ResultSet 객체로 받아온다.
 			rs = pstmt.executeQuery();
-			//select 된 row 가 여러개라면 반복문 돌면서 추출한다.
-			while (rs.next()) {
+			//만일 select 된 row 가 있다면  //whlie 문을 써도 되지만 호출할 row 가 1개 이기 때문에 if 문이 적합
+			if (rs.next()) {
+				//MemberDto 객체를 생성해서
 				dto=new MemberDto();
-				//ResultSet 에 담긴 내용을 읽어와서 setter 메소드를 활용해서 dto 에 넣어준다.
+				//회원정보를 dto 에 담아준다.
 				dto.setNum(rs.getInt("num"));
 				dto.setName(rs.getString("name"));
 				dto.setAddr(rs.getString("addr"));
